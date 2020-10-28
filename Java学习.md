@@ -270,3 +270,370 @@ public class TestGiantDragon {
 2. 静态属性指向实例
 3. public static的 getInstance方法，返回第二步的静态属性
 
+
+
+## 005:抽象类和接口的区别
+
+区别1：
+			子类只能继承一个抽象类，不能继承多个
+			子类可以实现**多个**接口
+区别2：
+			**抽象类**可以定义
+			public,protected,package,private
+			静态和非静态属性
+			final和非final属性
+			但是**接口**中声明的属性，只能是
+			public
+			静态
+			final的
+			即便没有显式的声明
+
+注：抽象类和接口都可以有实体方法。
+
+
+
+## 006：数字与字符串
+
+### 字符串与数字转换：
+
+#### 数字转字符串：
+
+方法1： 使用String类的静态方法valueOf
+方法2： 先把基本类型装箱为对象，然后调用对象的toString
+
+```java
+package digit;
+  
+public class TestNumber {
+  
+    public static void main(String[] args) {
+        int i = 5;
+         
+        //方法1
+        String str = String.valueOf(i);
+         
+        //方法2
+        Integer it = i;
+        String str2 = it.toString();
+         
+    }
+}
+```
+
+#### 字符串转数字：
+
+调用Integer的静态方法parseInt
+
+```java
+package digit;
+  
+public class TestNumber {
+  
+    public static void main(String[] args) {
+ 
+        String str = "999";
+         
+        int i= Integer.parseInt(str);
+         
+        System.out.println(i);
+         
+    }
+}
+```
+
+### 格式化输出：
+
+如果不使用格式化输出，就需要进行字符串连接，如果变量比较多，拼接就会显得繁琐
+使用格式化输出，就可以简洁明了
+
+%s 表示字符串
+%d 表示数字
+%n 表示换行
+
+```java
+package digit;
+  
+public class TestNumber {
+  
+    public static void main(String[] args) {
+ 
+        String name ="盖伦";
+        int kill = 8;
+        String title="超神";
+         
+        //直接使用+进行字符串连接，编码感觉会比较繁琐，并且维护性差,易读性差
+        String sentence = name+ " 在进行了连续 " + kill + " 次击杀后，获得了 " + title +" 的称号";
+         
+        System.out.println(sentence);
+         
+        //使用格式化输出
+        //%s表示字符串，%d表示数字,%n表示换行
+        String sentenceFormat ="%s 在进行了连续 %d 次击杀后，获得了 %s 的称号%n";
+        System.out.printf(sentenceFormat,name,kill,title);
+         
+    }
+}
+```
+
+### 换行符：
+
+**换行符**就是另起一行 --- '\n' 换行（newline）
+**回车符**就是回到一行的开头 --- '\r' 回车（return）
+在eclipse里敲一个回车，实际上是**回车换行符**
+Java是跨平台的编程语言，同样的代码，可以在不同的平台使用，比如Windows,Linux,Mac
+然而在不同的操作系统，换行符是不一样的
+（1）在DOS和Windows中，每行结尾是 “\r\n”；
+（2）Linux系统里，每行结尾只有 “\n”；
+（3）Mac系统里，每行结尾是只有 "\r"。
+为了使得同一个java程序的换行符在所有的操作系统中都有一样的表现，使用%n，就可以做到平台无关的换行
+
+### 其他常用格式化操作：
+
+#### 总长度，左对齐，补0，千位分隔符，小数点位数，本地化表达
+
+```java
+package digit;
+  
+import java.util.Locale;
+   
+public class TestNumber {
+   
+    public static void main(String[] args) {
+        int year = 2020;
+        //总长度，左对齐，补0，千位分隔符，小数点位数，本地化表达
+          
+        //直接打印数字
+        System.out.format("%d%n",year);
+        //总长度是8,默认右对齐
+        System.out.format("%8d%n",year);
+        //总长度是8,左对齐
+        System.out.format("%-8d%n",year);
+        //总长度是8,不够补0
+        System.out.format("%08d%n",year);
+        //千位分隔符
+        System.out.format("%,8d%n",year*10000);
+  
+        //小数点位数
+        System.out.format("%.2f%n",Math.PI);
+          
+        //不同国家的千位分隔符
+        System.out.format(Locale.FRANCE,"%,.2f%n",Math.PI*10000);
+        System.out.format(Locale.US,"%,.2f%n",Math.PI*10000);
+        System.out.format(Locale.UK,"%,.2f%n",Math.PI*10000);
+          
+    }
+}
+```
+
+### 操纵字符串：
+
+#### 获取字符：
+
+charAt(int index)获取指定位置的字符
+
+#### 获取对应的字符数组：
+
+toCharArray()
+获取对应的字符数组
+
+#### 截取子字符串：
+
+subString
+截取子字符串
+
+```java
+package character;
+    
+public class TestString {
+    
+    public static void main(String[] args) {
+   
+        String sentence = "盖伦,在进行了连续8次击杀后,获得了 超神 的称号";
+         
+        //截取从第3个开始的字符串 （从0开始）
+        String subString1 = sentence.substring(3);
+         
+        System.out.println(subString1);
+         
+        //截取从第3个开始的字符串 （从0开始）到5-1的位置的字符串
+        //左闭右开
+        String subString2 = sentence.substring(3,5);
+         
+        System.out.println(subString2);
+         
+    }
+}
+```
+
+#### 分隔:
+
+split
+根据分隔符进行分隔
+
+```java
+package character;
+    
+public class TestString {
+    
+    public static void main(String[] args) {
+   
+        String sentence = "盖伦,在进行了连续8次击杀后,获得了 超神 的称号";
+         
+        //根据,进行分割，得到3个子字符串
+        String subSentences[] = sentence.split(",");
+        for (String sub : subSentences) {
+            System.out.println(sub);
+        }
+           
+    }
+}
+```
+
+#### 去掉首尾空格：
+
+trim
+去掉首尾空格
+
+```java
+package character;
+    
+public class TestString {
+    
+    public static void main(String[] args) {
+   
+        String sentence = "        盖伦,在进行了连续8次击杀后,获得了 超神 的称号      ";
+         
+        System.out.println(sentence);
+        //去掉首尾空格
+        System.out.println(sentence.trim());
+    }
+}
+```
+
+#### 大小写转换：
+
+toLowerCase 全部变成小写
+toUpperCase 全部变成大写
+
+```java
+package character;
+    
+public class TestString {
+    
+    public static void main(String[] args) {
+   
+        String sentence = "Garen";
+         
+        //全部变成小写
+        System.out.println(sentence.toLowerCase());
+        //全部变成大写
+        System.out.println(sentence.toUpperCase());
+         
+    }
+}
+```
+
+#### 定位：
+
+indexOf 判断字符或者子字符串出现的位置
+contains 是否包含子字符串
+
+```java
+package character;
+     
+public class TestString {
+     
+    public static void main(String[] args) {
+    
+        String sentence = "盖伦,在进行了连续8次击杀后,获得了超神 的称号";
+  
+        System.out.println(sentence.indexOf('8')); //字符第一次出现的位置
+          
+        System.out.println(sentence.indexOf("超神")); //字符串第一次出现的位置
+          
+        System.out.println(sentence.lastIndexOf("了")); //字符串最后出现的位置
+          
+        System.out.println(sentence.indexOf(',',5)); //从位置5开始，出现的第一次,的位置
+          
+        System.out.println(sentence.contains("击杀")); //是否包含字符串"击杀"
+          
+    }
+}
+```
+
+#### 替换：
+
+replaceAll 替换所有的
+replaceFirst 只替换第一个
+
+```java
+package character;
+    
+public class TestString {
+    
+    public static void main(String[] args) {
+   
+        String sentence = "盖伦,在进行了连续8次击杀后,获得了超神 的称号";
+ 
+        String temp = sentence.replaceAll("击杀", "被击杀"); //替换所有的
+         
+        temp = temp.replaceAll("超神", "超鬼");
+         
+        System.out.println(temp);
+         
+        temp = sentence.replaceFirst(",","");//只替换第一个
+         
+        System.out.println(temp);
+         
+    }
+}
+```
+
+### Stringbuffer:
+
+StringBuffer是可变长的字符串
+
+append追加
+delete 删除
+insert 插入
+reverse 反转
+
+```java
+package character;
+  
+public class TestString {
+  
+    public static void main(String[] args) {
+        String str1 = "let there ";
+ 
+        StringBuffer sb = new StringBuffer(str1); //根据str1创建一个StringBuffer对象
+        sb.append("be light"); //在最后追加
+         
+        System.out.println(sb);
+         
+        sb.delete(4, 10);//删除4-10之间的字符
+         
+        System.out.println(sb);
+         
+        sb.insert(4, "there ");//在4这个位置插入 there
+         
+        System.out.println(sb);
+         
+        sb.reverse(); //反转
+         
+        System.out.println(sb);
+ 
+    }
+  
+}
+```
+
+#### 为什么StringBuffer可以变长？
+
+和String**内部是一个字符数组**一样，StringBuffer也维护了一个字符数组。 但是，这个字符数组，**留有冗余长度**
+比如说new StringBuffer("the")，其内部的字符数组的长度，是19，而不是3，这样调用插入和追加，在现成的数组的基础上就可以完成了。
+如果追加的长度超过了19，就会分配一个新的数组，长度比原来多一些，把原来的数据复制到新的数组中，**看上去** 数组长度就变长了 参考[MyStringBuffer](https://how2j.cn/k/number-string/number-string-mystringbuilder/331.html)
+length: “the”的长度 3
+capacity: 分配的总空间 19
+
+**注：** 19这个数量，不同的JDK数量是不一样的
